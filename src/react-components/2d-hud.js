@@ -23,6 +23,8 @@ class TopHUD extends Component {
     activeTip: PropTypes.string,
     history: PropTypes.object,
     onToggleMute: PropTypes.func,
+
+    onEmojiChange: PropTypes.func,
     onToggleFreeze: PropTypes.func,
     onSpawnPen: PropTypes.func,
     onSpawnCamera: PropTypes.func,

@@ -1,6 +1,8 @@
 import { injectCustomShaderChunks } from "../utils/media-utils";
 import { AVATAR_TYPES } from "../utils/avatar-utils";
 
+import faSmileBeam from "../assets/images/sprites/camera_off.png";
+
 function ensureAvatarNodes(json) {
   const { nodes } = json;
   if (!nodes.some(node => node.name === "Head")) {
@@ -37,6 +39,7 @@ AFRAME.registerComponent("player-info", {
     avatarType: { type: "string", default: AVATAR_TYPES.LEGACY }
   },
   init() {
+    this.changeEmoji = this.changeEmoji.bind(this);
     this.displayName = null;
     this.communityIdentifier = null;
     this.applyProperties = this.applyProperties.bind(this);
@@ -58,6 +61,7 @@ AFRAME.registerComponent("player-info", {
     }
   },
   play() {
+    this.el.sceneEl.addEventListener("action_emoji_change", this.changeEmoji);
     this.el.addEventListener("model-loaded", this.applyProperties);
     this.el.sceneEl.addEventListener("presence_updated", this.updateDisplayName);
     if (this.isLocalPlayerInfo) {
@@ -65,11 +69,22 @@ AFRAME.registerComponent("player-info", {
     }
   },
   pause() {
+    this.el.sceneEl.removeEventListener("action_emoji_change", this.changeEmoji);
     this.el.removeEventListener("model-loaded", this.applyProperties);
     this.el.sceneEl.removeEventListener("presence_updated", this.updateDisplayName);
     if (this.isLocalPlayerInfo) {
       this.el.querySelector(".model").removeEventListener("model-error", this.handleModelError);
     }
+  },
+  changeEmoji() {
+    //console.log("change emoji called");
+
+    this.el.sceneEl
+      .querySelector("#player-rig")
+      .querySelector(".image")
+      .setAttribute("media-loader", { src: new URL(faSmileBeam, window.location.href).href });
+
+    console.log("change emoji called");
   },
   update() {
     this.applyProperties();

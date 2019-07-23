@@ -173,7 +173,30 @@ body.vr-mode {
   transform: translateX(-50%);
   pointer-events: auto;
 }
-
+////////////
+:local(.my-test-button) {
+  
+  position: absolute;
+ // margin-bottom: 1px;
+  display: flex;
+  left: 50%;
+  bottom: 24px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: transparent;
+  border: transparent;
+  pointer-events: auto;
+  min-width: 150px;
+ // display: flex;
+  //transition: opacity 0.15s linear;
+}
+:local(.my-test-button):hover {
+  color: $action-color;
+}
+:local(.my-test-button):disabled{
+  color: $dark-grey;
+}
+/////////////////////////////////
 :local(.choose-scene-button) {
   @extend %action-button-secondary;
   pointer-events: auto;

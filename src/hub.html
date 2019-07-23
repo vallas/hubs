@@ -151,6 +151,9 @@
 
                         <template data-name="Spine">
                             <a-entity is-remote-hover-target personal-space-invader="radius: 0.2; useMaterial: true;" bone-visibility>
+                                <a-entity class = "image" scale="0.15 0.15 0.15" position="0 -0.025 0.13"> 
+                                    
+                                </a-entity>
                                 <a-entity class="ui interactable-ui">
                                     <a-entity billboard class="freeze-menu" visibility-while-frozen="withinDistance: 100; requireHoverOnNonMobile: false;" avatar-volume-controls>
                                         <a-entity class="avatar-volume-label" text="value: 0%; anchor: center; align: center; color: #ff3464; letterSpacing: 4; width:1.5;" text-raycast-hack position="0.0 0.675 0.35" scale="1.25 1.25 1.25"></a-entity>
@@ -465,9 +468,20 @@
                         sprite
                         icon-button="image: snap.png; hoverImage: snap-hover.png; activeImage: snap.png; activeHoverImage: snap-hover.png"
                         scale="0.075 0.075 0.075"
-                        position="0 0.225 0"
+                        position="0 0.125 0"
                         class="video-snap-button"
                     ></a-entity>
+
+                    <a-entity
+                    is-remote-hover-target
+                    tags="singleActionButton: true; isHoverMenuChild: true;"
+                    sprite
+                    icon-button="image: snap.png; hoverImage: snap-hover.png; activeImage: snap.png; activeHoverImage: snap-hover.png"
+                    scale="0.075 0.075 0.075"
+                    position="0 0.125 0"
+                    class="video-chest-image-button"
+                ></a-entity>
+
                     <a-entity class="video-time-label" text="value: 0; anchor: center; align: center; color: #aaa;" text-raycast-hack position="0 -0.24 0" scale="0.75 0.75 0.75"></a-entity>
                     <a-entity class="video-volume-label" text="value: 0%; anchor: center; align: center; color: #ccc; letterSpacing: 4;" text-raycast-hack position="0.0 0.14 0.015" scale="1.25 1.25 1.25"></a-entity>
                     <a-entity
@@ -521,6 +535,20 @@
                         ></a-entity>
                     </a-entity>
                 </a-entity>
+            </template>
+
+            <template id= "image-hover-menu">
+                    <a-entity class="ui interactable-ui hover-container" visible="false">
+                            <a-entity
+                            is-remote-hover-target
+                            tags="singleActionButton: true; isHoverMenuChild: true;"
+                            sprite
+                            icon-button="image: snap.png; hoverImage: snap-hover.png; activeImage: snap.png; activeHoverImage: snap-hover.png"
+                            scale="0.075 0.075 0.075"
+                            position="0 0.1 0"
+                            class="video-chest-image-button"
+                        ></a-entity>
+                    </a-entity>
             </template>
 
             <template id="hubs-destination-hover-menu">
@@ -612,7 +640,7 @@
             ></a-mixin>
 
             <a-mixin id="rounded-action-button"
-                text-button="
+                text-button="     
                     textHoverColor: #fff;
                     textColor: #fff;
                     backgroundColor: #ff3464;
@@ -738,7 +766,9 @@
                     ></a-entity>
                 </a-entity>
             </a-entity>
-
+            <a-entity class = "image">
+                
+            </a-entity>
             <a-entity
                 id="player-camera"
                 class="camera"

@@ -51,6 +51,9 @@ import ClientInfoDialog from "./client-info-dialog.js";
 import OAuthDialog from "./oauth-dialog.js";
 import LobbyChatBox from "./lobby-chat-box.js";
 import InWorldChatBox from "./in-world-chat-box.js";
+//import AvatarEmojiChatBox from "./avatar-emoji-chat-box.js";
+
+
 import AvatarEditor from "./avatar-editor";
 import MicLevelWidget from "./mic-level-widget.js";
 import OutputLevelWidget from "./output-level-widget.js";
@@ -68,6 +71,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons/faBars";
 import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
 import { faStar } from "@fortawesome/free-solid-svg-icons/faStar";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons/faArrowLeft";
+import { faSmileBeam } from "@fortawesome/free-solid-svg-icons/faSmileBeam";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import qsTruthy from "../utils/qs_truthy";
@@ -187,6 +192,9 @@ class UIRoot extends Component {
     audioTrack: null,
     numAudioTracks: 0,
     micDevices: [],
+
+    ////////
+    changeAvatarChestImg: false,
 
     profileNamePending: "Hello",
 
@@ -471,6 +479,15 @@ class UIRoot extends Component {
   exit = reason => {
     this.props.exitScene(reason);
     this.setState({ exited: true });
+  };
+///////////////////////////////////////////////
+
+  
+  emojiChange = () =>{
+    
+   this.props.scene.emit("action_emoji_change");
+    console.log("emojiChange called on ui-root.js ");
+
   };
 
   isWaitingForAutoExit = () => {
@@ -1616,7 +1633,7 @@ class UIRoot extends Component {
                   </div>
                 </div>
               )}
-            {enteredOrWatchingOrPreload && (
+            {enteredOrWatchingOrPreload && !this.state.frozen && (
               <InWorldChatBox
                 discordBridges={discordBridges}
                 onSendMessage={this.sendMessage}
@@ -1630,7 +1647,13 @@ class UIRoot extends Component {
                 <FormattedMessage id="entry.leave-room" />
               </button>
             )}
-
+            {this.state.frozen && (
+              <button className={classNames(styles.myTestButton)} onClick={() => this.emojiChange()}>
+              <i>
+                <FontAwesomeIcon icon={faSmileBeam} />
+              </i>
+              </button>
+            )}
             {!this.state.frozen &&
               !watching &&
               !preload && (
@@ -1830,6 +1853,7 @@ class UIRoot extends Component {
                   onToggleFreeze={this.toggleFreeze}
                   onToggleSpaceBubble={this.toggleSpaceBubble}
                   onSpawnPen={this.spawnPen}
+                  onEmojiChange={this.emojiChange}
                   onSpawnCamera={() => this.props.scene.emit("action_toggle_camera")}
                   onShareVideo={this.shareVideo}
                   onEndShareVideo={this.endShareVideo}
